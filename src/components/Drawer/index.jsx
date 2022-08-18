@@ -1,18 +1,15 @@
 import React from "react";
 import styles from './Drawer.module.scss';
 
-function Drawer() {
+function Drawer({ setCartOpened, cartOpened }) {
   return (
-    <div style={{
-      display: 'none',
-    }} className={styles['overlay']}>
+    <div className={styles['overlay']}>
       <div className={styles['drawer']}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
-          <img className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" />
+          <img title="Закрыть" className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" onClick={() => setCartOpened(!cartOpened)} />
 
         </h2>
-
 
         <div className={styles['items']}>
           <div className={styles['cartItem']}>
@@ -25,7 +22,7 @@ function Drawer() {
               <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
               <b> 12 999 руб.</b>
             </div>
-            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" />
+            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" title="Удалить" />
           </div>
 
           <div className={styles['cartItem']}>
@@ -38,7 +35,7 @@ function Drawer() {
               <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
               <b> 12 999 руб.</b>
             </div>
-            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" />
+            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" title="Удалить"/>
           </div>
         </div>
 
