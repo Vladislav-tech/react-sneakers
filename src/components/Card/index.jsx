@@ -5,14 +5,14 @@ import styles from './Card.module.scss';
 
 
 function Card({ title, price, url }) {
-  const [isAdded, addToCart] = useState(false);
-  const [isFavorite, addToFavorite] = useState(false)
+  const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false)
   return (
     <div className={styles['card']}>
       <img className="cu-p" 
         src={isFavorite ? '/img/heart-liked.svg' : '/img/heart-unliked.svg'} 
         alt="favorite" 
-        onClick={() => addToFavorite(!isFavorite)}
+        onClick={() => setIsFavorite(!isFavorite)}
         title={isFavorite ? 'Удалить из закладок' : 'Добавить в закладки'}
         />
       <img width="133" height="112" src={url} alt="Sneakers" />
@@ -22,7 +22,7 @@ function Card({ title, price, url }) {
           <span>Цена:</span>
           <b>{price} руб.</b>
         </div>
-        <img className="cu-p" onClick={() => addToCart(!isAdded)} 
+        <img className="cu-p" onClick={() => setIsAdded(!isAdded)} 
           width="32" 
           height="32" 
           src={isAdded ? '/img/btn-checked.svg' : '/img/btn-plus.svg'} alt="add" 

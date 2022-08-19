@@ -1,13 +1,13 @@
 import React from "react";
 import styles from './Drawer.module.scss';
 
-function Drawer({ setCartOpened, cartOpened }) {
+function Drawer({ closeMenu }) {
   return (
     <div className={styles['overlay']}>
       <div className={styles['drawer']}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
-          <img title="Закрыть" className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" onClick={() => setCartOpened(!cartOpened)} />
+          <img title="Закрыть" className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" onClick={closeMenu} />
 
         </h2>
 

@@ -4,8 +4,6 @@ import Card from "./components/Card";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
 
-const data = [];
-
 function App() {
   const [sneakers, setSneakers] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
@@ -18,8 +16,8 @@ function App() {
 
   return (
     <div className="wrapper clear">
-      {cartOpened && <Drawer cartOpened={cartOpened} setCartOpened={setCartOpened} />}
-      <Header cartOpened={cartOpened} setCartOpened={setCartOpened}/>
+      {cartOpened && <Drawer cartOpened={cartOpened} closeMenu={() => setCartOpened(false)} />}
+      <Header cartOpened={cartOpened} openMenu={() => setCartOpened(true)}/>
 
       <div className="content p-40">
         <div className="d-flex justify-between align-center mb-40">
@@ -32,14 +30,12 @@ function App() {
           </div>
         </div>
         <div className="d-flex flex-wrap">
-          {sneakers.map(item => (
+          {sneakers.map(sneaker => (
           <Card 
-            key={item.id} 
-            price={item.price} 
-            title={item.name} 
-            url={item.url}
-            onPlus={() => console.log('Добавили в корзину')}
-            onFavorite={() => console.log('Добавили в закладки')}
+            key={sneaker.id} 
+            price={sneaker.price} 
+            title={sneaker.name} 
+            url={sneaker.url}
           />
           ))}
         </div>
