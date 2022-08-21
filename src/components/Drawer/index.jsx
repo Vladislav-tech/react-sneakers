@@ -1,42 +1,26 @@
 import React from "react";
+import CartSneaker from "../CartSneaker";
 import styles from './Drawer.module.scss';
 
-function Drawer({ closeMenu }) {
+function Drawer({ closeMenu, addedSneakers = [] }) {
   return (
     <div className={styles['overlay']}>
       <div className={styles['drawer']}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
           <img title="Закрыть" className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" onClick={closeMenu} />
-
         </h2>
 
         <div className={styles['items']}>
-          <div className={styles['cartItem']}>
-            <div style={{
-              backgroundImage: 'url(/img/sneakers/1.jpg)'
-            }} className={styles['cartItemImg']}>
-
-            </div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b> 12 999 руб.</b>
-            </div>
-            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" title="Удалить" />
-          </div>
-
-          <div className={styles['cartItem']}>
-            <div style={{
-              backgroundImage: 'url(/img/sneakers/1.jpg)'
-            }} className={styles['cartItemImg']}>
-
-            </div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b> 12 999 руб.</b>
-            </div>
-            <img className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" title="Удалить"/>
-          </div>
+          {addedSneakers.map(addedSneaker => (
+            <CartSneaker 
+              price={addedSneaker.price} 
+              name={addedSneaker.title} 
+              url={addedSneaker.url}
+              key={addedSneaker.id}
+              id={addedSneaker.id}
+            />
+          ))}
         </div>
 
         <div className={styles['cartTotalBlock']}>

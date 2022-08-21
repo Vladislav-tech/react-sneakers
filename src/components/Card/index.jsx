@@ -4,9 +4,15 @@ import PropTypes from 'prop-types';
 import styles from './Card.module.scss';
 
 
-function Card({ title, price, url }) {
+function Card({ title, price, url, id, onPlus }) {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const onClickPlus = () => {
+    onPlus({ title, price, url, id});
+    setIsAdded(!isAdded);
+  }
+
   return (
     <div className={styles['card']}>
       <img className="cu-p" 
@@ -22,7 +28,7 @@ function Card({ title, price, url }) {
           <span>Цена:</span>
           <b>{price} руб.</b>
         </div>
-        <img className="cu-p" onClick={() => setIsAdded(!isAdded)} 
+        <img className="cu-p" onClick={onClickPlus} 
           width="32" 
           height="32" 
           src={isAdded ? '/img/btn-checked.svg' : '/img/btn-plus.svg'} alt="add" 
