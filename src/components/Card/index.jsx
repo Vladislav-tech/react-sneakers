@@ -4,21 +4,26 @@ import PropTypes from 'prop-types';
 import styles from './Card.module.scss';
 
 
-function Card({ title, price, url, id, onPlus }) {
+function Card({ title, price, url, id, onPlus, onAddToFavorite, favorited = false }) {
   const [isAdded, setIsAdded] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorited);
 
   const onClickPlus = () => {
     onPlus({ title, price, url, id});
     setIsAdded(!isAdded);
-  }
+  };
+
+  const onClickFavorite = () => {
+    onAddToFavorite({ title, price, url, id })
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <div className={styles['card']}>
       <img className="cu-p" 
         src={isFavorite ? '/img/heart-liked.svg' : '/img/heart-unliked.svg'} 
         alt="favorite" 
-        onClick={() => setIsFavorite(!isFavorite)}
+        onClick={onClickFavorite}
         title={isFavorite ? 'Удалить из закладок' : 'Добавить в закладки'}
         />
       <img width="133" height="112" src={url} alt="Sneakers" />

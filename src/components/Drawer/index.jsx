@@ -2,7 +2,7 @@ import React from "react";
 import CartSneaker from "../CartSneaker";
 import styles from './Drawer.module.scss';
 
-function Drawer({ closeMenu, addedSneakers = [] }) {
+function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
   return (
     <div className={styles['overlay']}>
       <div className={styles['drawer']}>
@@ -12,13 +12,14 @@ function Drawer({ closeMenu, addedSneakers = [] }) {
         </h2>
 
         <div className={styles['items']}>
-          {addedSneakers.map(addedSneaker => (
+          {addedSneakers.map((addedSneaker, index) => (
             <CartSneaker 
               price={addedSneaker.price} 
               name={addedSneaker.title} 
               url={addedSneaker.url}
-              key={addedSneaker.id}
               id={addedSneaker.id}
+              onRemoveItem={onRemoveItem}
+              key={index}
             />
           ))}
         </div>
