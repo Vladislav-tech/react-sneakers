@@ -1,9 +1,40 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../../context";
 import CartSneaker from "../CartSneaker";
 import Info from "../Info";
 import styles from './Drawer.module.scss';
 
+const delay = () => new Promise((resolve) => setTimeout(resolve, 350));
+
 function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
+
+  const [isOrderCompleted, setIsOrderCompleted] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { cartSneakers, setCartSneakers } = useContext(AppContext);
+  const onClickOrder = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.post('https://62fe178aa85c52ee482f82b0.mockapi.io/orders', {
+        items: cartSneakers,
+      });
+      setOrderId(data.id)
+      setIsOrderCompleted(true);
+      setCartSneakers([]);
+
+      for (let i = 0; i < cartSneakers.length; i+=1) {
+        const element = cartSneakers[i];
+        await axios.delete('https://62fe178aa85c52ee482f82b0.mockapi.io/cart/' + element.id)
+        await delay();
+      }
+
+    } catch(e) {
+      alert('Не удалось создать заказ')
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div className={styles['overlay']}>
       <div className={styles['drawer']}>
@@ -39,17 +70,17 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
                   <b>1074 руб.</b>
                 </li>
               </ul>
-              <button className={styles['greenButton']}>
+              <button disabled={isLoading} onClick={onClickOrder} className={styles['greenButton']}>
                 Оформить заказ
                 <img src="/img/arrow.svg" alt="arrow" />
               </button>
             </div>
           </>
         ) : (
-          <Info 
-            title="Корзина пустая" 
-            image="/img/empty-cart.jpg" 
-            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ." 
+          <Info
+            title={!isOrderCompleted ? "Корзина пустая" : "Заказ оформлен"}
+            image={!isOrderCompleted ? "/img/empty-cart.jpg" : "/img/complete-order.jpg"}
+            description={!isOrderCompleted ? "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ." :`Ваш заказ #${orderId} скоро будет передан курьерской доставке`}
           />
         )}
 
