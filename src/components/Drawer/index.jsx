@@ -1,5 +1,6 @@
 import React from "react";
 import CartSneaker from "../CartSneaker";
+import Info from "../Info";
 import styles from './Drawer.module.scss';
 
 function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
@@ -45,15 +46,11 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
             </div>
           </>
         ) : (
-            <div className="cartEmpty d-flex align-center justify-center flex-column flex">
-              <img className="mb-20" width="120px" height="120px" src="/img/empty-cart.jpg" alt="Empty" />
-              <h2>Корзина пустая</h2>
-              <p className="opacity-6">Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.</p>
-              <button onClick={closeMenu} className={styles['greenButton']}>
-                <img src="/img/arrow.svg" alt="Arrow" style={{transform: 'rotate(-180deg)', marginLeft: '30px'}}/>
-                Вернуться назад
-              </button>
-            </div>
+          <Info 
+            title="Корзина пустая" 
+            image="/img/empty-cart.jpg" 
+            description="Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ." 
+          />
         )}
 
 

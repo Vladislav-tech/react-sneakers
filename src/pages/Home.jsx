@@ -9,7 +9,6 @@ function Home({
   onAddToFavorite,
   transformQuerySearch,
   setSearchValue,
-  cartSneakers,
   isLoading
 
 }) {
@@ -20,7 +19,6 @@ function Home({
           key={index}
           onPlus={(addedSneaker) => onAddToCart(addedSneaker)}
           onAddToFavorite={(favoriteSneaker) => onAddToFavorite(favoriteSneaker)}
-          added={cartSneakers.some(cartSneaker => +cartSneaker.id === +sneaker.id)}
           loading={isLoading}
           {...sneaker}
         />
