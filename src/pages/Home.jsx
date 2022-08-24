@@ -8,9 +8,26 @@ function Home({
   onChangeSearchInput,
   onAddToFavorite,
   transformQuerySearch,
-  setSearchValue
+  setSearchValue,
+  cartSneakers,
+  isLoading
 
 }) {
+  const renderSneakers = () => {
+    return (isLoading ? Array.from({ length: 12 }) : sneakers.filter(item => transformQuerySearch(item.title).includes(transformQuerySearch(searchValue))))
+      .map((sneaker, index) => (
+        <Card
+          key={index}
+          onPlus={(addedSneaker) => onAddToCart(addedSneaker)}
+          onAddToFavorite={(favoriteSneaker) => onAddToFavorite(favoriteSneaker)}
+          added={cartSneakers.some(cartSneaker => +cartSneaker.id === +sneaker.id)}
+          loading={isLoading}
+          {...sneaker}
+        />
+      ))
+    ;
+  };
+
   return (
     <div className="content p-40">
       <div className="d-flex justify-between align-center mb-40">
@@ -32,18 +49,7 @@ function Home({
         </div>
       </div>
       <div className="d-flex flex-wrap">
-        {console.log('Home: ', sneakers)}
-        {sneakers.filter(item => transformQuerySearch(item.title).includes(transformQuerySearch(searchValue))).map((sneaker, index) => (
-          <Card
-            price={sneaker.price}
-            title={sneaker.title}
-            url={sneaker.url}
-            id={sneaker.id}
-            key={index}
-            onPlus={(addedSneaker) => onAddToCart(addedSneaker)}
-            onAddToFavorite={(favoriteSneaker) => onAddToFavorite(favoriteSneaker)}
-          />
-        ))}
+        {renderSneakers()}
       </div>
     </div>
   );
