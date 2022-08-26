@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import axios from "axios";
@@ -8,6 +8,11 @@ import Header from "./components/Header";
 import Favorites from "./pages/Favorites";
 
 import { AppContext } from './context';
+import Orders from "./pages/Orders";
+
+export const transformQuerySearch = (str) => {
+  return str.trim().toLowerCase();
+};
 
 function App() {
   const [sneakers, setSneakers] = useState([]);
@@ -19,11 +24,12 @@ function App() {
 
   useEffect(() => {
     async function fetchData() {
-      const cartResponse = await axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/cart');
-      const favoritesResponse = await axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/favorites');
-      const itemsResponse = await axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/items');
-
-
+      const [cartResponse, favoritesResponse, itemsResponse] = await Promise.all([
+        axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/cart'),
+        axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/favorites'),
+        axios.get('https://62fe178aa85c52ee482f82b0.mockapi.io/items')
+      ]);
+      
       setCartSneakers(cartResponse.data);
       setFavoriteSneakers(favoritesResponse.data);
       setSneakers(itemsResponse.data);
@@ -35,10 +41,7 @@ function App() {
   }, []);
 
   const onAddToCart = async (addedSneaker) => {
-    // axios.post('https://62fe178aa85c52ee482f82b0.mockapi.io/cart', addedSneaker)
-    // setCartSneakers(prevData => [...prevData, addedSneaker])
-    console.log(addedSneaker)
-    if (cartSneakers.find(cartSneaker => +cartSneaker.id === +addedSneaker.id)) {
+    if (cartSneakers.find(cartSneaker => +cartSneaker.parentId === +addedSneaker.id)) {
       axios.delete(`https://62fe178aa85c52ee482f82b0.mockapi.io/cart/${addedSneaker.id}`);
       setCartSneakers(prevData => prevData.filter(item => +item.id !== +addedSneaker.id));
     } else {
@@ -49,7 +52,7 @@ function App() {
 
   const onRemoveItem = (id) => {
     axios.delete(`https://62fe178aa85c52ee482f82b0.mockapi.io/cart/${id}`);
-    setCartSneakers(prevData => prevData.filter(item => item.id !== id))
+    setCartSneakers(prevData => prevData.filter(item => +item.id !== +id))
   };
 
   const onChangeSearchInput = (evt) => {
@@ -72,12 +75,10 @@ function App() {
 
   };
 
-  const transformQuerySearch = (str) => {
-    return str.trim().toLowerCase();
-  };
+
 
   const isItemAdded = (id) => {
-    return cartSneakers.some(cartSneaker => +cartSneaker.id === +id);
+    return cartSneakers.some(cartSneaker => +cartSneaker.parentId === +id);
   };
 
   return (
@@ -86,10 +87,11 @@ function App() {
         cartSneakers, sneakers, 
         favoriteSneakers, isItemAdded, 
         onAddToFavorite, setCartOpened,
-        setCartSneakers
+        setCartSneakers,
+        onAddToCart
         }}>
         <div className="wrapper clear">
-          {cartOpened && <Drawer addedSneakers={cartSneakers} closeMenu={() => setCartOpened(false)} onRemoveItem={onRemoveItem} />}
+          <Drawer addedSneakers={cartSneakers} closeMenu={() => setCartOpened(false)} onRemoveItem={onRemoveItem} opened={cartOpened}/>
           <Header cartOpened={cartOpened} openMenu={() => setCartOpened(true)} />
 
           <Routes>
@@ -109,6 +111,7 @@ function App() {
             <Route path="/favorites" element={
               <Favorites/>
             } />
+            <Route path="/orders" element={<Orders/>}/>
           </Routes>
         </div>
       </AppContext.Provider>

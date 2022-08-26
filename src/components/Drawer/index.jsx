@@ -1,18 +1,18 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
-import { AppContext } from "../../context";
+import React, { useState } from "react";
+import { useCart } from "../../hooks/useCart";
 import CartSneaker from "../CartSneaker";
 import Info from "../Info";
 import styles from './Drawer.module.scss';
 
 const delay = () => new Promise((resolve) => setTimeout(resolve, 350));
 
-function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
+function Drawer({ closeMenu, onRemoveItem, addedSneakers = [], opened }) {
 
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { cartSneakers, setCartSneakers } = useContext(AppContext);
+  const { cartSneakers, setCartSneakers, totalPrice } = useCart();
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
@@ -34,9 +34,9 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
     }
     setIsLoading(false);
   };
-
+  console.log(opened)
   return (
-    <div className={styles['overlay']}>
+    <div className={`${styles['overlay']} ${opened ? styles['overlay-visible'] : ''}`}>
       <div className={styles['drawer']}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
@@ -62,12 +62,12 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [] }) {
                 <li>
                   <span>Итого:</span>
                   <div></div>
-                  <b>21 498 руб.</b>
+                  <b>{totalPrice} руб.</b>
                 </li>
                 <li>
                   <span>Налог 5%:</span>
                   <div></div>
-                  <b>1074 руб.</b>
+                  <b>{(totalPrice / 100 * 5).toFixed(2)} руб.</b>
                 </li>
               </ul>
               <button disabled={isLoading} onClick={onClickOrder} className={styles['greenButton']}>

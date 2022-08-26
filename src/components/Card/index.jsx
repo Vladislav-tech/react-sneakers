@@ -17,14 +17,12 @@ function Card({
 }) {
   const { isItemAdded } = useContext(AppContext)
   const [isFavorite, setIsFavorite] = useState(favorited);
-  console.log(title, isItemAdded(id))
-
   const onClickPlus = () => {
-    onPlus({ title, price, url, id });
+    onPlus({ title, price, url, id, parentId: id });
   };
 
   const onClickFavorite = () => {
-    onAddToFavorite({ title, price, url, id })
+    onAddToFavorite({ title, price, url, id, parentId: id })
     setIsFavorite(!isFavorite);
   };
 
@@ -61,12 +59,15 @@ function Card({
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>
-            <img className="cu-p" onClick={onClickPlus}
-              width="32"
-              height="32"
-              src={isItemAdded(id) ? '/img/btn-checked.svg' : '/img/btn-plus.svg'} alt="add"
-              title={isItemAdded(id) ? 'Удалить из корзины' : 'Добавить в корзину'}
-            />
+              {onPlus ? (
+                <img className="cu-p" onClick={onClickPlus}
+                  width="32"
+                  height="32"
+                  src={isItemAdded(id) ? '/img/btn-checked.svg' : '/img/btn-plus.svg'} alt="add"
+                  title={isItemAdded(id) ? 'Удалить из корзины' : 'Добавить в корзину'}
+                />
+            ) : null}
+
           </div>
         </>
       )}
