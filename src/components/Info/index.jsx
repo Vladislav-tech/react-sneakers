@@ -16,7 +16,7 @@ const Info = ({
       <h2>{title}</h2>
       <p className="opacity-6">{description}</p>
       <button style={{width: btnWidth}} onClick={() => setCartOpened(false)} className={styles['greenButton']}>
-        <img src="/img/arrow.svg" alt="Arrow" style={{ transform: 'rotate(-180deg)', marginLeft: '30px' }} />
+        <img src="img/arrow.svg" alt="Arrow" style={{ transform: 'rotate(-180deg)', marginLeft: '30px' }} />
         Вернуться назад
       </button>
     </div>

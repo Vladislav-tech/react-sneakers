@@ -40,7 +40,7 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [], opened }) {
       <div className={styles['drawer']}>
         <h2 className="d-flex justify-between mb-30">
           Корзина
-          <img title="Закрыть" className="removeBtn cu-p" src="/img/btn-remove.svg" alt="Remove" onClick={closeMenu} />
+          <img title="Закрыть" className="removeBtn cu-p" src="img/btn-remove.svg" alt="Remove" onClick={closeMenu} />
         </h2>
         {addedSneakers.length ? (
           <>
@@ -72,14 +72,14 @@ function Drawer({ closeMenu, onRemoveItem, addedSneakers = [], opened }) {
               </ul>
               <button disabled={isLoading} onClick={onClickOrder} className={styles['greenButton']}>
                 Оформить заказ
-                <img src="/img/arrow.svg" alt="arrow" />
+                <img src="img/arrow.svg" alt="arrow" />
               </button>
             </div>
           </>
         ) : (
           <Info
             title={!isOrderCompleted ? "Корзина пустая" : "Заказ оформлен"}
-            image={!isOrderCompleted ? "/img/empty-cart.jpg" : "/img/complete-order.jpg"}
+            image={!isOrderCompleted ? "img/empty-cart.jpg" : "img/complete-order.jpg"}
             description={!isOrderCompleted ? "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ." :`Ваш заказ #${orderId} скоро будет передан курьерской доставке`}
           />
         )}

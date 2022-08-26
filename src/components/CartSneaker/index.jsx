@@ -13,7 +13,7 @@ function CartSneaker({ name, price, url, onRemoveItem, id }) {
         <p className="mb-5">{name}</p>
         <b> {price} руб.</b>
       </div>
-      <img onClick={() => onRemoveItem(id)} className={styles['removeBtn']} src="/img/btn-remove.svg" alt="Remove" title="Удалить" />
+      <img onClick={() => onRemoveItem(id)} className={styles['removeBtn']} src="img/btn-remove.svg" alt="Remove" title="Удалить" />
     </div>
     );
 }

@@ -47,7 +47,7 @@ function Card({
       ) : (
         <>
           <img className="cu-p"
-            src={isFavorite ? '/img/heart-liked.svg' : '/img/heart-unliked.svg'}
+            src={isFavorite ? 'img/heart-liked.svg' : 'img/heart-unliked.svg'}
             alt="favorite"
             onClick={onClickFavorite}
             title={isFavorite ? 'Удалить из закладок' : 'Добавить в закладки'}
@@ -63,7 +63,7 @@ function Card({
                 <img className="cu-p" onClick={onClickPlus}
                   width="32"
                   height="32"
-                  src={isItemAdded(id) ? '/img/btn-checked.svg' : '/img/btn-plus.svg'} alt="add"
+                  src={isItemAdded(id) ? 'img/btn-checked.svg' : 'img/btn-plus.svg'} alt="add"
                   title={isItemAdded(id) ? 'Удалить из корзины' : 'Добавить в корзину'}
                 />
             ) : null}

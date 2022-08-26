@@ -32,7 +32,7 @@ function Home({
         <h1>{searchValue.trim() || 'Все кроссовки'}</h1>
         <div className="search-block d-flex">
           <div className="favorite">
-            <img src="/img/search.svg" alt="Search" />
+            <img src="img/search.svg" alt="Search" />
           </div>
           <input value={searchValue} onChange={onChangeSearchInput} type="text" placeholder="Поиск..." />
           {
@@ -40,7 +40,7 @@ function Home({
               onClick={() => setSearchValue('')}
               title="Очистить"
               className="clearBtn cu-p"
-              src="/img/btn-remove.svg"
+              src="img/btn-remove.svg"
               alt="Clear" />
           }
 
